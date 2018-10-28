@@ -12,7 +12,7 @@ plugins {
 }
 
 application {
-    mainClassName = "io.apiman.watcher.Main"
+    mainClassName = "io.apiman.watcher.WatcherAppKt"
 }
 
 
