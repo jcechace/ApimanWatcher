@@ -13,14 +13,12 @@ import io.ktor.client.features.json.JsonFeature
  * @author Jakub Cechacek
  */
 object ClientFactory {
-    val OCP_TOKEN = "nxZjpPyzSy7kKVZKJilhXDnxAH7oGCCOImdlCdOwrzE"
-    val OCP_URL = "https://master.ocp.api-qe.eng.rdu2.redhat.com:443"
 
     fun k8Client() : KubernetesClient {
         val config = ConfigBuilder()
-            .withMasterUrl(OCP_URL)
+            .withMasterUrl(appConfig().openshift.url)
             .withTrustCerts(true)
-            .withOauthToken(OCP_TOKEN)
+            .withOauthToken(appConfig().openshift.token)
             .withWebsocketPingInterval(30_000L)
             .withWebsocketTimeout(30_0000L)
             .build()

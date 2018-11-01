@@ -7,7 +7,7 @@ import io.fabric8.kubernetes.client.KubernetesClient
  *
  * @author Jakub Cechacek
  */
-interface ConfigReader<T> {
+interface ApiConfigReader<T> {
 
     val k8Client: KubernetesClient
 
