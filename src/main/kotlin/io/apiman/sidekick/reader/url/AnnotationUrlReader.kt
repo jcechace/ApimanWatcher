@@ -1,7 +1,7 @@
-package io.apiman.watcher.reader.url
+package io.apiman.sidekick.reader.url
 
-import io.apiman.watcher.WatcherConfiguration
-import io.apiman.watcher.appConfig
+import io.apiman.sidekick.WatcherConfiguration
+import io.apiman.sidekick.appConfig
 import io.fabric8.kubernetes.api.model.Service
 import io.ktor.http.URLBuilder
 import io.ktor.http.URLProtocol

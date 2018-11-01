@@ -1,4 +1,4 @@
-package io.apiman.watcher
+package io.apiman.sidekick
 
 import com.typesafe.config.ConfigFactory
 import io.github.config4k.extract

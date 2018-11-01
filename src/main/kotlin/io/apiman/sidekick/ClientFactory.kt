@@ -1,4 +1,4 @@
-package io.apiman.watcher
+package io.apiman.sidekick
 
 import io.fabric8.kubernetes.client.ConfigBuilder
 import io.fabric8.kubernetes.client.DefaultKubernetesClient

@@ -1,4 +1,4 @@
-package io.apiman.watcher.publishers
+package io.apiman.sidekick.publishers
 
 import io.apiman.gateway.engine.beans.Api
 

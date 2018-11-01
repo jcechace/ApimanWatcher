@@ -1,10 +1,10 @@
-package io.apiman.watcher.watchers
+package io.apiman.sidekick.watchers
 
 import io.apiman.gateway.engine.beans.Api
-import io.apiman.watcher.WatcherConfiguration
-import io.apiman.watcher.appConfig
-import io.apiman.watcher.publishers.ApiPublisher
-import io.apiman.watcher.reader.ApiConfigReader
+import io.apiman.sidekick.WatcherConfiguration
+import io.apiman.sidekick.appConfig
+import io.apiman.sidekick.publishers.ApiPublisher
+import io.apiman.sidekick.reader.ApiConfigReader
 import io.fabric8.kubernetes.api.model.Service
 import io.fabric8.kubernetes.client.KubernetesClient
 import io.fabric8.kubernetes.client.KubernetesClientException

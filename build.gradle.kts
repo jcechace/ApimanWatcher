@@ -14,7 +14,7 @@ plugins {
 }
 
 application {
-    mainClassName = "io.apiman.watcher.WatcherAppKt"
+    mainClassName = "io.apiman.sidekick.SidekickAppKt"
 }
 
 apply(plugin = "com.github.johnrengelman.shadow")

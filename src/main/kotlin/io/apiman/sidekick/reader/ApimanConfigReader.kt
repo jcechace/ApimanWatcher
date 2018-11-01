@@ -1,12 +1,11 @@
-package io.apiman.watcher.reader
+package io.apiman.sidekick.reader
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.apiman.gateway.engine.beans.Api
 import io.apiman.gateway.engine.beans.Policy
-import io.apiman.watcher.WatcherConfiguration
-import io.apiman.watcher.appConfig
-import io.apiman.watcher.reader.url.AnnotationUrlReader
+import io.apiman.sidekick.appConfig
+import io.apiman.sidekick.reader.url.AnnotationUrlReader
 import io.fabric8.kubernetes.api.model.Service
 import io.fabric8.kubernetes.client.KubernetesClient
 import mu.KLogging

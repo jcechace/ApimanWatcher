@@ -1,8 +1,8 @@
-package io.apiman.watcher.publishers
+package io.apiman.sidekick.publishers
 
 import io.apiman.gateway.engine.beans.Api
-import io.apiman.watcher.WatcherConfiguration
-import io.apiman.watcher.appConfig
+import io.apiman.sidekick.WatcherConfiguration
+import io.apiman.sidekick.appConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.request.get

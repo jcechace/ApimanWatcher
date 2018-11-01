@@ -1,4 +1,4 @@
-package io.apiman.watcher.reader
+package io.apiman.sidekick.reader
 
 import io.fabric8.kubernetes.api.model.Service
 import io.fabric8.kubernetes.client.KubernetesClient
