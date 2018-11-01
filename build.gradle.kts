@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.Coroutines
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 val logback_version: String by project
 val ktor_version: String by project
@@ -8,12 +8,16 @@ val slf4j_version: String by project
 
 plugins {
     application
-    kotlin("jvm") version "1.3.0-rc-190"
+    kotlin("jvm") version "1.3.0"
+    id("com.github.johnrengelman.plugin-shadow") version "2.0.3" apply false
+
 }
 
 application {
     mainClassName = "io.apiman.watcher.WatcherAppKt"
 }
+
+apply(plugin = "com.github.johnrengelman.shadow")
 
 
 repositories {
@@ -22,6 +26,7 @@ repositories {
     maven { url = uri("https://kotlin.bintray.com/ktor") }
     maven { url = uri("https://kotlin.bintray.com/kotlinx") }
     maven { url = uri("https://kotlin.bintray.com/kotlin-eap") }
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -37,6 +42,9 @@ dependencies {
 
 //      json library
     compile("com.google.code.gson:gson:2.8.5")
+
+//      Configuration
+    compile("io.github.config4k:config4k:0.4.0")
 
 //      logging
     compile ("io.github.microutils:kotlin-logging:$kotlin_logging_version")
