@@ -1,0 +1,61 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: "discovery-example"
+  annotations:
+    description: "Apiman Vert.X API gateway"
+    iconClass: "icon-load-balancer"
+    tags: "api,gateway,apiman"
+objects:
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "${name}"
+    labels:
+      app: "${name}"
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: "${name}"
+      spec:
+        containers:
+          - image: docker.io/mijaros/httpbin
+            imagePullPolicy: Always
+            name: httpbin
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "${name}"
+    annotations:
+      discovery.3scale.net/port: '8080'
+      discovery.3scale.net/scheme: http
+      discovery.apiman.net/policies: httpbin-policies
+    labels:
+      app: "${name}"
+      discovery.3scale.net: 'true'
+  spec:
+    ports:
+      - name: 8080-tcp
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+parameters:
+- name: "name"
+  description: "Name of the example service"
+  value: httpbin-example
+
