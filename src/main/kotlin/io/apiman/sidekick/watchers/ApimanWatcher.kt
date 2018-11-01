@@ -1,7 +1,6 @@
 package io.apiman.sidekick.watchers
 
 import io.apiman.gateway.engine.beans.Api
-import io.apiman.sidekick.WatcherConfiguration
 import io.apiman.sidekick.appConfig
 import io.apiman.sidekick.publishers.ApiPublisher
 import io.apiman.sidekick.reader.ApiConfigReader
