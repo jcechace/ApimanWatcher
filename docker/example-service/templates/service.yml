@@ -54,6 +54,20 @@ objects:
         port: 8080
         protocol: TCP
         targetPort: 8080
+
+- apiVersion: v1
+  kind: ConfigMap
+  data:
+    apiPolicies: |-
+      [
+        {
+          "policyImpl": "class:io.apiman.gateway.engine.policies.RateLimitingPolicy",
+          "policyJsonConfig": "{ \"limit\" : 20, \"granularity\" : \"Api\", \"period\" : \"Minute\" }"
+        }
+      ]
+  metadata:
+    name: "${name}-policy-config"
+
 parameters:
 - name: "name"
   description: "Name of the example service"
