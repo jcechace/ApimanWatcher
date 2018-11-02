@@ -18,7 +18,6 @@ object ClientFactory {
         val config = ConfigBuilder()
             .withMasterUrl(appConfig().openshift.url)
             .withTrustCerts(true)
-            .withOauthToken(appConfig().openshift.token)
             .withWebsocketPingInterval(30_000L)
             .withWebsocketTimeout(30_0000L)
             .build()
