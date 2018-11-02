@@ -1,0 +1,36 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: "apiman-sidekick"
+  annotations:
+    description: "Sidekick Api publisher"
+    iconClass: "icon-load-balancer"
+    tags: "api,gateway,apiman,sidekick,api-discovery"
+objects:
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "${name}"
+    labels:
+      app: "${name}"
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: "${name}"
+      spec:
+        containers:
+          - image: docker.io/jcechace/apiman-sidekick
+            imagePullPolicy: Always
+            name: sidekick
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+    test: false
+
+parameters:
+- name: "name"
+  description: "Name of the example service"
+  value: "apiman-sidekick"
+
