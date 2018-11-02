@@ -54,6 +54,8 @@ objects:
         port: 8080
         protocol: TCP
         targetPort: 8080
+    selector:
+      deploymentconfig: "${name}"
 
 - apiVersion: v1
   kind: ConfigMap

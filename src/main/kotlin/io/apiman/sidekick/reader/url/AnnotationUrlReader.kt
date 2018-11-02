@@ -22,7 +22,11 @@ class AnnotationUrlReader(val resource: Service) {
         }.build()
     }
 
-    private fun readHost() = resource.metadata.name!!
+    private fun readHost(): String {
+        val name = resource.metadata.name
+        val org = resource.metadata.namespace
+        return "${name}.${org}.svc"
+    }
 
     private fun readPort() = readAnnotation(discoveryCfg.annotations.port,"")
 
