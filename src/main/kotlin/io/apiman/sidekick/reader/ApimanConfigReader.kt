@@ -10,6 +10,9 @@ import io.fabric8.kubernetes.api.model.Service
 import io.fabric8.kubernetes.client.KubernetesClient
 import mu.KLogging
 
+/**
+ * Extracts Apiman gateway API configuration from k8 cluster
+ */
 class ApimanConfigReader(override val k8Client: KubernetesClient) : ApiConfigReader<Api> {
     companion object : KLogging()
 
@@ -36,10 +39,15 @@ class ApimanConfigReader(override val k8Client: KubernetesClient) : ApiConfigRea
         }
     }
 
+    /**
+     * Reads Apiman policy configuration for given k8 service
+     *
+     * @return policy configuration form Apiman gateway
+     */
     private fun readPolicies(resource: Service, defaultFrom: String): List<Policy> {
         logger.info { "Trying to read policy configuration" }
         val annotations = resource.metadata.annotations
-        val cmName = annotations.getOrDefault(appConfig().discovery.apiman.annotations.policies, defaultFrom)
+        val cmName = annotations.getOrDefault(appConfig().apiman.annotations.policies, defaultFrom)
 
         logger.info { "Looking for config-map '${cmName}'" }
         val configMap = k8Client

@@ -18,7 +18,7 @@ import java.io.IOException
 class ApimanPublisher(private val client: HttpClient) : ApiPublisher<Api> {
     companion object : KLogging()
 
-    private val apimanConfig = appConfig().discovery.apiman
+    private val apimanConfig = appConfig().apiman
 
     private suspend fun execute(block: suspend () -> Boolean): Boolean {
         return try {

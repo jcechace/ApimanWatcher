@@ -5,18 +5,24 @@ import io.github.config4k.extract
 
 data class AppConfig(
     val openshift: OpenShiftConfig,
-    val discovery: DiscoveryConfig
+    val discovery: DiscoveryConfig,
+    val ssl: SSSLConfig?,
+    val apiman: ApimanConfig
+)
+
+data class SSSLConfig(
+    val path: String?,
+    val password: String?
 )
 
 data class OpenShiftConfig(
     val url: String,
-    val token: String
+    val token: String?
 )
 
 data class DiscoveryConfig(
     val label: String,
-    val annotations: DiscoveryAnnotationConfig,
-    val apiman: DiscoveryApimanConfig
+    val annotations: DiscoveryAnnotationConfig
 )
 
 data class DiscoveryAnnotationConfig(
@@ -26,12 +32,14 @@ data class DiscoveryAnnotationConfig(
     val descriptorPath: String
 )
 
-data class DiscoveryApimanConfig(
+data class ApimanConfig(
     val host: String,
-    val annotations: DiscoveryApimanAnnotationConfig
+    val username: String,
+    val password: String,
+    val annotations: ApimanAnnotationConfig
 )
 
-data class DiscoveryApimanAnnotationConfig(
+data class ApimanAnnotationConfig(
     val policies: String
 )
 

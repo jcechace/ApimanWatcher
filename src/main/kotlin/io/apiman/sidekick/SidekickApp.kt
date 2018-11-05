@@ -7,11 +7,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 /**
+ * Sidekick entry point
  *
  * @author Jakub Cechacek
  */
-val k8Client = ClientFactory.k8Client()
-val httpClient = ClientFactory.apimanHttpClient()
+val k8Client = k8Client()
+val httpClient = apimanHttpClient()
 
 fun main(args: Array<String>) = runBlocking<Unit> {
     val publisher = ApimanPublisher(httpClient)
@@ -19,6 +20,6 @@ fun main(args: Array<String>) = runBlocking<Unit> {
     val watcher = ApimanWatcher(k8Client, reader, publisher)
 
     launch {
-        watcher.watch()
+        watcher.launch()
     }
 }

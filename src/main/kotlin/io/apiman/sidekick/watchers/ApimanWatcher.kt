@@ -16,7 +16,7 @@ import mu.KLogging
  * @author Jakub Cechacek
  */
 class ApimanWatcher(
-    val k8Client: KubernetesClient,
+    override val k8Client: KubernetesClient,
     val reader: ApiConfigReader<Api>,
     val publisher: ApiPublisher<Api>
 ) : ApiWatcher {
@@ -46,12 +46,6 @@ class ApimanWatcher(
         publisher.retireApi(api)
         logger.info("[DELETED] ${resource.metadata.namespace}:${resource.metadata.name}")
     }
-
-     override suspend fun watch() {
-         onStartup()
-         serviceQuery().watch(this)
-     }
-
     override fun eventReceived(action: Watcher.Action, resource: Service) = runBlocking {
         logger.debug { "Watcher received ${action} action" }
         when (action) {
