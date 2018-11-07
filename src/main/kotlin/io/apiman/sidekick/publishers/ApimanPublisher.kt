@@ -1,14 +1,11 @@
 package io.apiman.sidekick.publishers
 
 import io.apiman.gateway.engine.beans.Api
-import io.apiman.sidekick.appConfig
+import io.apiman.sidekick.apimanUrl
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.request.get
-import io.ktor.http.ContentType
-import io.ktor.http.HttpMethod
-import io.ktor.http.contentType
-import io.ktor.http.isSuccess
+import io.ktor.http.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import mu.KLogging
@@ -17,8 +14,6 @@ import java.io.IOException
 
 class ApimanPublisher(private val client: HttpClient) : ApiPublisher<Api> {
     companion object : KLogging()
-
-    private val apimanConfig = appConfig().apiman
 
     private suspend fun execute(block: suspend () -> Boolean): Boolean {
         return try {
@@ -32,8 +27,7 @@ class ApimanPublisher(private val client: HttpClient) : ApiPublisher<Api> {
     private suspend fun fetchOrganizations(): List<String> {
         logger.debug { "Fetching ORGs" }
         return client.get {
-            url {
-                host = apimanConfig.host
+            apimanUrl {
                 path("organizations")
             }
         }
@@ -42,8 +36,7 @@ class ApimanPublisher(private val client: HttpClient) : ApiPublisher<Api> {
     private suspend fun fetchPublishedApis(org: String): List<String> {
         logger.debug { "Fetching API for $org" }
         return client.get {
-            url {
-                host = apimanConfig.host
+            apimanUrl {
                 path("organizations", org, "apis")
             }
         }
@@ -52,8 +45,7 @@ class ApimanPublisher(private val client: HttpClient) : ApiPublisher<Api> {
     private suspend fun fetchPublishedApiVersions(org: String, api: String): List<Api> {
         logger.debug { "Fetching VERSIONS for $org:$api" }
         val list = client.get<List<String>> {
-            url {
-                host = apimanConfig.host
+            apimanUrl {
                 path("organizations", org, "apis", api, "versions")
             }
         }
@@ -79,12 +71,16 @@ class ApimanPublisher(private val client: HttpClient) : ApiPublisher<Api> {
         }.flatMap { it.await() }
     }
 
+    fun URLBuilder.apiman(block: URLBuilder.(URLBuilder) -> Unit): Unit {
+        block(this)
+    }
+
+
     override suspend fun retireApi(api: Api): Boolean = execute {
         logger.info { "Retiring API ${api.organizationId}:${api.apiId}" }
         client.call {
             method = HttpMethod.Delete
-            url {
-                host = apimanConfig.host
+            apimanUrl {
                 path(
                     "organizations", api.organizationId,
                     "apis", api.apiId,
@@ -97,8 +93,7 @@ class ApimanPublisher(private val client: HttpClient) : ApiPublisher<Api> {
     override suspend fun publishApi(api: Api): Boolean = execute {
         logger.info { "Publishing API ${api.organizationId}:${api.apiId}" }
         client.call {
-            url {
-                host = apimanConfig.host
+            apimanUrl {
                 path("apis")
             }
             contentType(ContentType.Application.Json)

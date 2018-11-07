@@ -20,19 +20,24 @@ import javax.net.ssl.SSLContext
  * K8 client factory
  */
 fun k8Client() : KubernetesClient {
+    val config = appConfig()
     val builder = ConfigBuilder()
         .withMasterUrl(appConfig().openshift.url)
-        .withTrustCerts(true)
+        .withTrustCerts(appConfig().ssl.trustAll)
         .withWebsocketPingInterval(30_000L)
         .withWebsocketTimeout(30_0000L)
 
-    appConfig().openshift.token?.let {
+    config.openshift.token?.let {
         builder.withOauthToken(it)
     }
+    config.ssl.trustStore?.path?.let {
+        builder.withTrustStoreFile(it)
+    }
+    config.ssl.trustStore?.password?.let {
+        builder.withTrustStorePassphrase(it)
+    }
 
-    val config = builder.build()
-
-    return DefaultKubernetesClient(config)
+    return DefaultKubernetesClient(builder.build())
 }
 
 fun apimanHttpClient() : HttpClient {
@@ -41,7 +46,7 @@ fun apimanHttpClient() : HttpClient {
         engine {
             config {
                 val sslContext = SSLContext.getInstance("TLS")
-                val trustManager = FallbackTruststoreManager(config.ssl?.path, config.ssl?.password)
+                val trustManager = FallbackTruststoreManager(config.ssl.trustStore?.path, config.ssl.trustStore?.password)
                 sslContext.init(null, arrayOf(trustManager), null);
                 sslSocketFactory(sslContext.socketFactory, trustManager)
             }
