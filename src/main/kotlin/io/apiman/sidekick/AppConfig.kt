@@ -44,6 +44,7 @@ data class DiscoveryAnnotationConfig(
 data class ApimanConfig(
     val scheme: String,
     val host: String,
+    val port: Int,
     val username: String,
     val password: String,
     val annotations: ApimanAnnotationConfig
@@ -51,6 +52,7 @@ data class ApimanConfig(
     val url = URLBuilder().apply {
         protocol = URLProtocol.createOrDefault(scheme)
         host = this@ApimanConfig.host
+        port = this@ApimanConfig.port
     }
 }
 
