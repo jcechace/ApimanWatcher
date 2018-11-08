@@ -21,16 +21,26 @@ objects:
           app: "${name}"
       spec:
         containers:
-          - image: docker.io/jcechace/apiman-sidekick
+          - name: sidekick
+            image: docker.io/jcechace/apiman-sidekick
             imagePullPolicy: Always
-            name: sidekick
-            resources: {}
-            terminationMessagePath: /dev/termination-log
-            terminationMessagePolicy: File
+            env:
+            - name: APIMAN_AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: "${APIMAN_NAME}-auth-secret"
+                  key: "APIMAN_AUTH_USERNAME"
+            - name: APIMAN_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "${APIMAN_NAME}-auth-secret"
+                  key: "APIMAN_AUTH_PASSWORD"
     test: false
 
 parameters:
 - name: "name"
   description: "Name of the example service"
   value: "apiman-sidekick"
-
+- name: APIMAN_NAME
+  description: "Name of the Apiman API Gateway"
+  value: apiman
