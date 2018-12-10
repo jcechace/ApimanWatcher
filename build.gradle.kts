@@ -60,8 +60,11 @@ dependencies {
     compile("io.apiman:apiman-gateway-engine-beans:1.5.1.Final")
 
 //      test dependencies
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.10")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.11")
     testImplementation("io.mockk:mockk:1.8.12.kotlin13")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1")
 }
 
+val test by tasks.getting(Test::class) {
+    useJUnitPlatform { }
+}
