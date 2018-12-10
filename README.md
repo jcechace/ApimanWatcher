@@ -50,6 +50,12 @@ unzip build/distributions/sidekick-shadow.zip
 Even though it is perfectly fine and possible to run Sidekick directly from the distribution, it is mainly intended to be deployed inside OpenShift cluster along apiman. 
 It is expected for sidekick to be deployed in the same project as Apiman gateway. Sidekick was developed to play nicely with this Apiman Vert.X Gateway deployed from this [OpenShift template]()
 
+First grant the necessary cluster-wide ``view`` role to the ``default`` account of your project. 
+```
+oc adm policy add-cluster-role-to-user view system:serviceaccount:<project name>:default
+```
+
+Then deploy the Sidekick application
 ```
 oc create -f docker/sidekick/openshift/templates/sidekick.conf
 oc new-app apiman-sidekicks
