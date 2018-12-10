@@ -50,7 +50,10 @@ unzip build/distributions/sidekick-shadow.zip
 Even though it is perfectly fine and possible to run Sidekick directly from the distribution, it is mainly intended to be deployed inside OpenShift cluster along apiman. 
 It is expected for sidekick to be deployed in the same project as Apiman gateway. Sidekick was developed to play nicely with this Apiman Vert.X Gateway deployed from this [OpenShift template]()
 
-``oc create -f docker/sidekick/openshift/templates/sidekick.conf``
+```
+oc create -f docker/sidekick/openshift/templates/sidekick.conf
+oc new-app apiman-sidekicks
+```
 
 ## Configuration
 Sidekick uses [HOCON](https://github.com/lightbend/config/blob/master/HOCON.md) as the format of choice for its configuration. 
